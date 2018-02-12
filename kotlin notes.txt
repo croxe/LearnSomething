@@ -36,7 +36,7 @@ fun main(args: Array<String>) {
 }
 
 2.2 Classes and properties
-Class: the keyword to declay a class, which is the abstraction of a group function or value. Like function, it can take parameter. 
+Class: the keyword to declare a class, which is the abstraction of a group function or value. Like function, it can take parameter. 
 In Kotlin the public is the default visibility.
 
 2.2.1 Properties
@@ -59,7 +59,7 @@ import: to include library in particular package.
 * character: After the package name, it will make visible to all the functions in the package.
 
 2.3 enums and when
-enumn classes: define some val in the parameter, and then define the constant can add value in the form of parameter has.
+enum classes: define some val in the parameter, and then define the constant can add value in the form of parameter has.
 enum class Color(val r:Int, val g: Int, val b: Int){
 	RED(255,0,0), ORANGE(255,165,0),
 	YEllow(255,255,0), GREEN(0,255,0), BLUE(0,0,255),
@@ -179,7 +179,13 @@ fun readNumber(reader: BufferedReader): Int? {
 	}
 }
 
----------------------------------------------CH 3------------------------------------------
+
+
+
+
+
+
+--------------------------------------------ch3---------------------------------------------
 3.1 Creating collection in Kotlin
 
 setOf, listOf, mapOf create a collection, by using standard java collection
@@ -218,22 +224,20 @@ const: equivalent to "public static final", the property will be stored in a sta
 3.3 Extension functions and properties
 Extension function is a member of a class but is defined outside of it.
 
-package strings
-fun String.lastChar(): Char = this.get(this.length - 1)
-
 Kotlin is smooth integration with existing code. kotlin projects are built on top of Java
 librarices such as JDK, the Android framework, anh other third-party frameworks.
 
 fun String.lastChar(): Char = this.get(this.length -1)
 receiver type		     reciever object
 
-Kotlin can use any JVM language for extension funciotn, use keyword this to call extension
+Kotlin can use any JVM language for extension function, use keyword this to call extension
 function. However, extension functions don't have access to private or protected members of
 the class.
 
 3.3.1 Import and extension functions
 extension fuction doesn't automatically become available across entire project and it need to
 be import.
+
 import strings.lastChar
 val c = "Kotlin".lastChar()
 And, * imports works
@@ -365,9 +369,9 @@ fun User.validateBeforeSave() {
 
 
 
---------------------------Ch4-------------------------------------------------------------
+---------------------------------------Ch4-------------------------------------------------
 
-4.1 Defining class hierarchcies
+4.1 Defining class hierarchies
 sealed modifier: restricts the possible subclasses of a class.
 
 4.1.1 interface in kotlin
@@ -375,6 +379,10 @@ interface: to declare an interface in Kotlin, use interface keyword instead clas
 
 override: override methods and properties from superclass or interface, but in kotlin it's
 mandatory to have it.
+
+You can also override a val property with a var property, but not vice versa. This is allowed 
+because a val property essentially declares a getter method, and overriding it as a var 
+additionally declares a setter method in the derived class.
 
 default function: Kotlin has no special annotation for default keywords, and you jest provide
 a method body.
@@ -687,4 +695,4 @@ fun countClicks(window: Window){
 
 
 
-----------------------------------------CH 5------------------------------------------------
+------------------------------------------ch5-----------------------------------------------
