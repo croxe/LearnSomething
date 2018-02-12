@@ -1,0 +1,687 @@
+Chapter 2
+
+fun: the keywords to declare a function.
+
+#Parameter type, variable type is written after the parameter name
+#Omit the semicolon at back
+
+Function name: the name of the funciton, following by parameter list.
+Statement: don't have its own value and always be a top-level element in its enclosing block.
+Expressions: has a value and can be a part of another expression.
+Block body: a function is written with its body in curly braces.
+Expression body: a funciton return an expressino directly.
+Type inference: complier analyze the expression's return type when there is no return type declaration.
+Variable type: complier analyze the type of assigned value.
+
+kotlin-stdlib/kotlin.collections/joinToString
+fun <T> Array<out T>.joinToString(separator,prefix,postfix,lmit,trucated,transform)
+connect two string
+
+Println: In Kotlin standard library provides many wrappers around standard Java library functions, with more concise syntax.
+
+2.1.3 Variables
+Val(value): Immutable reference, A variable can't be reassigned after initialized.
+Var(variable): Mutable reference, A variable can be reassigned afte initialized.
+
+Val reference is itself immutable and cannot be changed, the object that it points to may be mutable.
+Var variable can change its value, but the type is fixed.
+
+2.1.4 String templates
+String templates: concatenation of variable and string literal. 
+$ character: to help interpret as variable refence. 
+${} charater: help to interpret expression.
+
+fun main(args: Array<String>) {
+	println("Hello, ${if (args.size > 0) args[0] else "someone"}!")
+}
+
+2.2 Classes and properties
+Class: the keyword to declay a class, which is the abstraction of a group function or value. Like function, it can take parameter. 
+In Kotlin the public is the default visibility.
+
+2.2.1 Properties
+Properties: In koklin, properties are the variable encapsulate in the class, and can only be declear by val and var. The property can be access directly without invole getter and setter.
+object.properties: can be access without write getter, setter, and, constructor, but you are welcome to implement a custom version getter, setter, and, constructor.
+
+if: if expression can be set in form if (condition) truevalue else falsevalue and return specify value.
+
+Array<T>: the declare type, T can be any type.
+
++ character: concatenation of string.
+
+fun main: the function run first.
+
+2.2.3 kotlin source code layout: directories and packages
+package: to include all declarations classes, functions, and properties in the file.
+
+import: to include library in particular package.
+
+* character: After the package name, it will make visible to all the functions in the package.
+
+2.3 enums and when
+enumn classes: define some val in the parameter, and then define the constant can add value in the form of parameter has.
+enum class Color(val r:Int, val g: Int, val b: Int){
+	RED(255,0,0), ORANGE(255,165,0),
+	YEllow(255,255,0), GREEN(0,255,0), BLUE(0,0,255),
+	INDIGO(75,0,130), VIOLET(238, 130, 238);   """Semicolon is required"""
+}
+
+2.3.3 when with arbitrary objects
+when: A keyword like switch in Java, take in form:
+fun mix(c1: Color, c2: Color) = 
+	When (setOf(c1, c2)){
+		setOf(RED, YELLOW) -> "ORANGE"
+		setOf(YELLOW, BLUE) -> "GREEN"
+		setOf(BLUE, VIOLET) -> "INDIGO"
+	}
+
+2.3.4 when without an argument
+When can also take no argument as a expression, but the branch need to be boolean expression.
+	When {
+		(Condition) -> num_1
+		(Condition) -> num_2
+		else -> num_3
+	}
+
+
+setOf: A keyword check wheather two set contain the same elements. 
+	When (setOf(c1,c2)){
+		setOf(A,B) -> N
+		setOf(C,D) -> M
+		else -> throw Exception(Null)
+	}
+
+2.3.5 Smart casts: combining type checks and casts
+is: Check the type of a variable, and later on, smart cast can help to cast value.
+fun example(x: Any) {
+    if (x is String) {
+        println(x.length) // x is automatically cast to String.
+    }
+}
+
+as: Casting type to different type.
+
+any: the ultimate parent of every object.
+
+2.3.6 Refactoring: replacing "if" with "when"
+fun eval(e: Expr): Int = 
+	when (e) {
+		is Num -> e.value
+		is Sum -> eval(e.right) + eval(e.left)
+		else -> throw IllegalArgumentException("Unknown expression")
+	}
+
+2.3.7 Blocks as branches of "if" and "when"
+fun evalwithLogging(e: Expr): Int =
+	when (e) {
+		is Num -> {
+			println{"num: ${e.value}"}
+			e.value
+		}
+		is Sum -> {
+			val left = evalWithLogging(e.left)
+			val right = evalWithLogging(e.right)
+			println("sum: $left + $right")
+			left + right
+		}
+		else -> throw illegalArgumentException("Unknow expression")
+	}
+
+throw: throw exception like Java did.
+
+2.4 "while" and "for" loops
+2.4.1 while loop
+while& do-while: 
+while (condition) { 
+	/*...*/
+} 
+
+do{ 
+	/*...*/
+} while (condition)
+
+2.4.2 ranges and progressions
+range: write the .. operator between two values; then it will return the the interval.
+note that in Kotlin ranges are closed interval, meaning the second value is also always apart of the range.
+
+in: use in operator to check whether a value is in a range, or its opposite, !in.
+fun isLetter(c: Char) =  c in "a".."z" || c in "A".."z"
+"Kotlin" in setOf("Java","Scala") """using in check in string"""
+
+downTo: progression that goes backward.
+for (i in 100 downTo 1 step 3)
+
+step: skip some value.
+
+until: create half-closed ranges, which don't include the specified end point.
+for (x in 0 until size)
+
+2.4.3 Iterating over maps
+for interation in other collection:
+TreeMap<Char, String>()
+for (c in "A".."F"){ code }
+
+2.4.4 Using an "in" check
+for ((name, phonenumber) in contact)
+
+2.5 Exception in Kotlin
+try, catch, finally: handle exceptions, try can also be an expression to assign value.
+Kotlin don't need explicitly write throws exception after the function declaration.
+
+fun readNumber(reader: BufferedReader): Int? {
+	try {
+		val line = reader.readLine()
+		return Integer.parseInt(line)
+	}catch (e: NumberFormatException){
+		return null
+	}finally {
+		reader.close()
+	}
+}
+
+---------------------------------------------CH 3------------------------------------------
+3.1 Creating collection in Kotlin
+
+setOf, listOf, mapOf create a collection, by using standard java collection
+val map = mapOf()
+
+toString: java collection have a default toString implementation.
+joinToString: 
+fun <T> joinToString(
+	collection: Collection<T>,
+	separator: String,
+	prefix: String,
+	postfix: String
+):String{
+	val result = StringBuilder(prefix)
+	for ((index, element) in collection.withIndex()){
+		if(index > 0) result.append(separator)
+		result.append(element)
+	}
+	result.append(postfix)
+	return result.toString()
+}
+
+3.2.1 Named arguments
+for the readable, kotlin add comment before the the name of arguments.
+
+3.2.2 Default parameter values
+joinToString(list, prefix = "# ") // middle argument omited
+
+3.2.3 top-level functions and properties
+@file:JvmName("StringFunctions") // change the name of the generated class that contains 
+Kotlin top-level funcitons.
+
+a function and property declare in outside of a class are visible in package.
+const: equivalent to "public static final", the property will be stored in a static field.
+
+3.3 Extension functions and properties
+Extension function is a member of a class but is defined outside of it.
+
+package strings
+fun String.lastChar(): Char = this.get(this.length - 1)
+
+Kotlin is smooth integration with existing code. kotlin projects are built on top of Java
+librarices such as JDK, the Android framework, anh other third-party frameworks.
+
+fun String.lastChar(): Char = this.get(this.length -1)
+receiver type		     reciever object
+
+Kotlin can use any JVM language for extension funciotn, use keyword this to call extension
+function. However, extension functions don't have access to private or protected members of
+the class.
+
+3.3.1 Import and extension functions
+extension fuction doesn't automatically become available across entire project and it need to
+be import.
+import strings.lastChar
+val c = "Kotlin".lastChar()
+And, * imports works
+import strings.*
+
+as: change the name on class or function when it is importing.
+import strings.lastChar as last
+val c = "Kotlin".last()
+
+3.3.2 Calling extension functions from Java
+Calling an extension function doesn't involve creating adapter objects or other runtime overhead.
+Calling funciton form JAVA: call the static method and pass the reciever object instance.
+Char c = StringUtilKt.lastChar("Java");
+
+3.3.3 Utility functions as extensions
+joinToString ( separator:String , prefix:String , postfix:String ):String{
+	Val result = StringBuilder(prefix)
+	for ((index, element) in this.withIndex()){
+		if (index>0)
+		result.append(separator)
+		result.append(element)
+	}
+	result.append(postfix)
+	return result.toString()
+}
+
+3.3.4 No overriding for extension function
+Extension function aren't a part of class; they're declared externally to it. Even though you
+can define extension functions with the same name and parameter types for a base class and its
+subclass, the function that's called depends on the static type of the variable being declared,
+not on the runtime type of the value stored in that variable.
+
+a extension function can only be override within the class where override was defined.
+Because it's static function in both Java and Kotlin.
+
+3.3.5 Extension properties
+Extension properties provide a way to extend classes with APIs that can be accessed using
+the property syntax, rather than thd function syntax.
+
+val String.lastChar: Char
+	get() = get(length - 1)
+The getter must always be defined, because there's no backing field and therefore no default
+getter implementation and there's nowhere to store the value specified as the initializer.
+
+StringBuilder:
+var String.lastChar: Char
+	get() = get(length - 1)
+	set(value: Char){
+		this.setCharAt(length - 1, value)
+	}
+
+3.4 Working with collections: varargs, infix calls, and library support
+vararg: allows you to declare a function taking an arbitrary number of arguments.
+An infix notation that lets you call some one-argument function without ceremony.
+Destructuring declarations that allow you to unpack a single composite value into multiple
+variables
+
+3.4.1 Extending the Java collections API
+Why we can use collections in Kotlin while using the Java library classes?
+Because last, max function are declared as extension functions
+fun <T> List<T>.last(): T
+fun Collection<Int>.max(): Int
+
+3.4.2 Varargs: functions that accept an arbitrary number of arguments
+varargs: a feature that allows pass an arbitrary number of values to a method by packing them in
+an array, and in Kotlin, it uses vararg modifier on the parameter.
+
+fun <T> asList(vararg ts: T): List<T> {
+    val result = ArrayList<T>()
+    for (t in ts) // ts is an Array
+        result.add(t)
+    return result
+}
+
+Spread operator: *operator -> uppack the array
+val a = arrayOf(1, 2, 3)
+val list = asList(-1, 0, *a, 4)
+
+3.4.3 Working with pairs: infix calls and destructuring declarations
+val map = mapOf(1 to "one", 7 to "seven", 53 to "fifty-three")
+
+infix call: the word "to" in this line isn't a built-in construct, but rather a method invocation.
+1.to("one") is same as 1 to "one"
+
+infix modifier: Infix calls can be used with regular methods and extension functions that have one
+required parameter. To allow a function to be called using the infix notation, you need to
+mark it with the infix modifier.
+
+infix fun Any.to(other: Any) = Pair(this, other)
+
+to funciton returns an instance of Pair, like
+val (number, name) = 1 to "one"
+
+fun <K, V> mapOf(vararg values: Pair<K, V>): Map<K, V>
+
+3.5 Working with strings and regular expressions
+Kotlin strings are exactly the same things as Java strings, no additional wrapper objects are created.
+
+3.5.1 Splitting Strings
+toRegex: Casting a string to regular expression
+string.split(delimiter)
+
+3.5.2 Regular expressions and triple-quoted strings
+val regex = """(.+)/(.+)\(.+)""".toRegex()
+
+3.5.3 Multiline triple-quoted strings
+"""\""" triple-quoted string can aviod escaping characters.
+
+3.6 Local functions and extensions
+nested local function:
+
+fun User.validateBeforeSave() {
+	fun validate(value: String, fieldName: String){
+		if (value.isEmpty()) {
+			throw IllegalArgumentException(
+				"Can't save user $id: empty $fieldName")
+		}
+	}
+	validate(name, "Name")
+	validate(address, "Address")
+}
+
+
+
+
+
+
+
+
+
+
+--------------------------Ch4-------------------------------------------------------------
+
+4.1 Defining class hierarchcies
+sealed modifier: restricts the possible subclasses of a class.
+
+4.1.1 interface in kotlin
+interface: to declare an interface in Kotlin, use interface keyword instead class keyword.
+
+override: override methods and properties from superclass or interface, but in kotlin it's
+mandatory to have it.
+
+default function: Kotlin has no special annotation for default keywords, and you jest provide
+a method body.
+interface clickable{
+	fun click()
+	fun showOff() = println("I'm clickable!")
+}
+
+super<Clickable>.showOff() 
+
+interface long_fish{ fun eating()}
+interface small_fish{ fun eating()}
+
+class tiny_fish: long_fish, samll_fish{
+	override fun eating(){ ... }
+}
+
+implement rule: if there is a defined function in many interfaces, and we try to run it in class, 
+then the compiler error will show up, "the class function must override, because it inhertis many 
+implementations of it".
+
+super: call the parent class.
+
+override fun eating()= super<long_fish>.eating()
+// implement only one interface.
+
+override fun eating()= {
+	super<tiny_fish>.eating()
+	super<long_fish>.eating()
+}
+// implement both interfaces.
+
+4.1.2 Open, final, and abstract modifiers: final by default
+fragile base class problem occurs when modifications of a base class can cause incorrect
+behavior of subclasses because the changed code of the base class no longer matches the
+assumptions in its subclasses.
+
+Programming style: all classes and methods that aren't specifically intended to be overridden in
+subclasses need to be explicityly marked as final, since the modifications of a base class can
+cause incorrect behaivior of subclasses.
+
+Java's classes and methods are open by default, Kotlin's are final by default
+open modifier: allow subclasses to override. The overrides function is open by default.
+final modifier: add final to close the override functions.
+
+abstract modifier: this class can't be instantiated, must be override insubclasses. Abstract
+members are always open.
+abstract class name{
+	abstract fun namename()
+	open fun namenamely(){}
+	fun namenamename()
+}
+
+final Can't overridden
+open Can be overridden
+abstract Must be overridden  can be used only in abstract classes
+
+4.1.3 Visibility modifiers: public by default
+public: this is the default visibility in Kotlin; package-private is the defaul visibility in
+Java. Kotlin use package only for organizing code in namespaces.
+
+internal: visible inside a module, which is a set of Kotlin files compiled together.
+In Java, the encapsulation can be accesse by external code define classes in the same packages.
+
+protected: only visible in the class and its subclasses.
+
+public(default)	visible everywhere
+internal	visible in a module
+protected	visible in subclasses
+private		visible in a class
+
+4.1.4 inner and nested classes: nested by default 
+Kotlin nested classes don't have access to the outer class instance, unless specifically reqested.
+
+Use this@Outer to access the Outer class from the Inner class:
+
+class Outer{
+	inner class Inner {
+		fun getOuterReference(): Outer = this@Outer
+	}
+}
+
+inner class: stores a reference to outer class.
+nested class: don't store a reference, this is the default.
+
+4.1.5 Sealed class: restricting hierarchies
+Sealed modifier: restricted the possibility of creating subclasses. All the direct subclass
+must nested in the superclass.
+
+Sealed modifier implies that the class is open.
+
+4.2 Declaring class with nontrivial constructors or properties
+In both java and kotlin, a class can declare one or more constructors.
+
+4.2.1 Initializing classes: primary constructor and initializer blocks
+Primary constructor: parameters surrounded by curly braces.
+class User constructor{ _nickname: String}{
+	val nickname: String
+	init{
+		nickname = _nickname
+	}
+}
+constructor: declaration of a primary or secondary constructor.
+init: introduces an initializer block, which contains initialization code.
+Primary constructor has a constrained syntax, it can't contain the initializaiton code.
+
+Alternally:
+this.nickname = nickname
+class user(_nickname: String){ val nickname = _nickname}
+class user(val nickname: String val isSubscribed: Boolean = true)
+
+To create an instance of a class, we call the constructor directly, without new keywords.
+
+If the class has a superclass, the primary constructor also needs to initialize the  superclass.
+open class User(val nickname:String){...}
+class TwitterUser(nickname:String){...}
+
+interfaces don't have constructors, so never need to put parentheses after its name in the supertype list.
+
+4.2.2 Secondary constructors: initializing the superclass in different ways.
+default parameter values cover most multiple constructors case.
+
+Multiple constructors: cinitialize the class in different ways. 
+primary constructor: after class covered by parentheses, and need initl to do assign.
+secondary constructor: start by keywork constructor, can use super keyword to invoke parenter constructor.
+
+this: can be use for calling another constructor from one class.
+
+class MyButton: View {
+	constructor(ctx: Context): this(ctx, MY_STYLE) {
+		//...
+	}
+	constructor(ctx: Context, attr: AttributeSet): super(ctx, attr){
+		//...
+	}
+}
+
+4.2.3 Implementing properties declared in interfaces
+Interface can contain abstract property declarations.
+So have to override and can be set for custom getter and property initializer.
+
+4.2.4 Accessing a backing field from a getter or setter
+custom getter & setter: additional logical after variable decleared. 
+Using field to refer to itself, so we don't fall into a dead loop.
+
+class User(val name: String) {
+	var address: String = "unspecified"
+		set(value: String) {
+			println("""
+				Address was changed for $name:
+				"$field" -> "$value".""".trimIndent())
+			field = value
+		}
+}
+
+use user.property = "String" to invoke a setter under the hood.(mutable property only)
+use user.property to invoke a getter.
+
+4.2.5 Changing accessor visibility
+Visibility modifier can be putting before the get and set.
+Put private set or get to make it only visible in class.
+
+4.3 Compiler-generated methods: data classes and class delegation
+Kotlin compiler can perform mechanical code generation, without cluttering the source code files.
+
+4.3.1 Universal object methods
+override fun toString() = "$parameter, $parameter"
+
+In Kotlin, == checks whether the objects are equal, not the references.
+== is the default way to compare two objects: it compares their values by calling equals under
+the hood. Thus, if equals is overridden in the class, you can safely compare its instances
+using ==. For reference comparison, you can use the === operator, which works exactly the same
+as == in Java.
+
+Any is the analogue of java.lang.Object: a superclass of all classes in Kotlin. The nullable type
+Any? means the object can be null.
+
+HashSet: at first compare hash codes, and only if codes are equal, thel the actual values compared.
+override fun hashCode(): Int = name.hashCode() * 31 + postalCode
+
+4.3.2 Data classes: autogenerated implementations of universal methods
+Don't have to generate all these methods in Kotlin. If you add the modifier data to your class, all
+the necessary methods are automatically generated.
+
+equal() and hashCode methods take into account all the properties declared in the PRIMARY constructor.
+
+Strongly recommended to use the read-only properties. This is required if use a instances as keys in
+a HashMap or a similar container, because otherwise the container could get into an invalid state if
+the object used as a key was modified after it was added to the container.
+
+copy: copy an object.
+class Client(val name: String, val postalCode: Int) {
+	fun copy(name: String = this.name, 
+	postalCode: Int = this.postalCode) = Client(name, postalCode)
+}
+
+Immutable objects are also good at multithreaded code: once an object has been created, it remains in 
+its original state, and you don't need to worry about other threads modifying the object while your
+code is working with it.
+
+In data classes, complier generates a copy method that allows to copy the instances. The copy has a
+separate lifecycle and can't affect the places in the code that refer to the original instance.
+
+4.3.3 Class delegation: using the "by" keyword
+common problem in design of large object-oriented systems is fragility caused by implementation
+inheritance, because it build up level by level. 
+
+final as default ensures that only those classes that are designed for extensibility can be inherited
+from. 
+
+Decorator pattern: need to add behavior to another class, when it's not designed for extension.
+Therefor create a new class and then implementing the same interface as the original class.
+Finally, you can override the default function and costum the behavior.
+
+by: delegating the implementation of the interface to another object. The compiler will generate similar
+So there is not need for override every function in the collection.
+
+class CountingSet<T>( val innerSet: MutableCollection<T> = HashSet<T>() 
+) :MutableCollection<T> by innerSet {
+	var Countings = 0
+	override fun add(element: T): Boolean{
+		Countings++
+		return innerSet.add(element)
+	}
+	override fun addAll(c: Collection<T>): Boolean{
+		Countings++
+		return innerSet.addAll(c)
+	}
+}
+
+4.4 Declaring a class and creating an instance, combined, with the object keyword
+object: the keyword defines a class and creates only one object. Singletons support.
+
+4.4.1 Object declarations: singletons made easy
+Singleton pattern: you define a class with a private constructor and a static field holding
+the only existing instance of the class.
+
+object payroll {
+	val allEmployees = arrayListOf<Person>()
+	fun calcglateSalary() {
+		for(person in allEmployees) [
+			//...
+		}
+	}
+}
+
+The object declaration combine a class declaration and a declaration of a single instane of
+that class.
+
+Object declarations can also inherit from classes and interfaces.
+
+Since there is only one variable, an object declaration can call all methods and all properties.
+
+Payroll.allEmployees.add(Person(...))
+Payroll.calculateSalary()
+
+4.4.2 Companion objects: a place for factory methods and static members
+Classes in Kotlin can¡¯t have static members. Kotlin relies on package-level functions and 
+object declarations.
+
+companion: the ability to access the methods and properties of that object directly through 
+the name of the containing class, without specifying the name of the object explicitly.
+
+class A {
+	companion object{
+		fun bar() {
+			//...
+		}
+	}
+}
+
+4.4.3 Companion objects as regular objects
+
+class Person(val name: String){
+	companion object Loader{
+		fun fromJSON(jsonText: String): Person = //...
+	}
+}
+
+>>> person = Person.Loader.fromJSON("{name: 'Dmitry'}")
+>>> person.name
+Dmitry
+
+4.4.4 Object expressions: anonymous inner classes rephrased
+The object keyword can be used for declaring anonymous objects.
+
+Kotlin anonymous object can be implement multiple interfaces or no interfaces.
+window.addMouseListener(
+	object : MousAdepter() {
+		override fun mouseClicked(e: MousdEvent){
+			//...
+		}
+		override fun mousdEntered(e: MouseEvent){
+			//...
+		}
+	}
+)
+
+The code in anonymous object can be access the variables in the function where it was created.
+And it's not a final variable.
+
+fun countClicks(window: Window){
+	var clickCount = 0 
+	windows.addMouseListener(object: MouseAdapter(){
+		override ful mouseClicked(e: MouseEvent){
+			clickCount++
+		}
+	})
+}
+
