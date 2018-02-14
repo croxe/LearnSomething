@@ -159,7 +159,7 @@ for (x in 0 until size)
 2.4.3 Iterating over maps
 for interation in other collection:
 TreeMap<Char, String>()
-for (c in "A".."F"){ code }
+for (c in "A".."F"){ //code }
 
 2.4.4 Using an "in" check
 for ((name, phonenumber) in contact)
@@ -696,3 +696,77 @@ fun countClicks(window: Window){
 
 
 ------------------------------------------ch5-----------------------------------------------
+
+
+
+
+
+
+
+------------------------------------------ch6-----------------------------------------------
+
+6.1 Nullability
+kotlin convert such NullPointerException error from runtime errors into compile-time errors.
+
+kotlin support nullable types.
+fun strLen(s: String) = s.length
+If the parameter is declared as type String, and in Kotlin this means it must always contain
+a string instance. No null will be accepted.
+
+fun strLenSafe(s: String?) = ...
+type? = type or null
+
+A type without a question mark denotes that variables of this type can't store null references.
+
+>>> fun strLenSafe(s: String?) = s.length()
+ERROR: only safe (?.) or non-null asserted (!!.) calls are allowed
+on a nullable receiver of type kotlin.String?
+
+>>> val x: String? = null
+>>> var y: String = x
+ERROR: Type mismatch: inferred type is String? but String was expected
+
+>>> strLen(x)
+ERROR: Type mismatch: inferred type is String? but String was expected
+
+the variable of nullable type has to be consist.
+
+has to check and replace the null to other in order to be consist 
+
+6.1.2 The meaning of types
+In java, string instance can be null value or string, which need type check for most of times.
+People skip those checks because they know from the general flow of data in the program
+that a value can't be null at a cerntain point. Sometimes they're wrong, and then programs 
+crashed.
+
+6.1.3 Safe call operator: ?.
+
+s?.toUpperCase() is equivalent to
+if (s != null) s.toUpperCase() else null.
+
+fun managerName(employee: Employee): String? = employee.manager?.name
+
+6.1.4 Elvis operator: ?:
+fun foo(s: String?) {
+	val t: String = s ?: ""
+}
+
+fun Person.countryName() = company?.address?.country ?: "Unknown"
+
+6.1.5 Safe casts: as?
+val otherPerson = o as? Person ?: return false
+Checks the type and returns false if no match
+
+6.1.6 Not-null assertions: !!
+fun ignoreNulls(s: String?) {
+	val sNotNull: String = s!!
+	println(sNotNull.length)
+}
+>>> ignoreNulls(null)
+	Exception in thread "main" kotlin.KotlinNullPointerException
+	at <...>.ignoreNulls(07_NotnullAssertions.kt:2)
+
+When the variable is null, then !! will throw Null exception.
+
+avoid using multiple 1! assertions on the same line:
+person.company!!.address!!.country
