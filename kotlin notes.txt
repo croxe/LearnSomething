@@ -694,10 +694,7 @@ fun countClicks(window: Window){
 }
 
 
-
 ------------------------------------------ch5-----------------------------------------------
-
-
 
 
 
@@ -708,6 +705,7 @@ fun countClicks(window: Window){
 6.1 Nullability
 kotlin convert such NullPointerException error from runtime errors into compile-time errors.
 
+6.1.1 Nullable types
 kotlin support nullable types.
 fun strLen(s: String) = s.length
 If the parameter is declared as type String, and in Kotlin this means it must always contain
@@ -754,6 +752,9 @@ fun foo(s: String?) {
 fun Person.countryName() = company?.address?.country ?: "Unknown"
 
 6.1.5 Safe casts: as?
+as? operator tries to cast a value to the specified type and returns null if the
+value doesn¡¯t have the proper type.
+
 val otherPerson = o as? Person ?: return false
 Checks the type and returns false if no match
 
@@ -770,3 +771,82 @@ When the variable is null, then !! will throw Null exception.
 
 avoid using multiple 1! assertions on the same line:
 person.company!!.address!!.country
+
+6.1.17 The let function
+let function deal with a nullable argument that should be passed to a function that expects
+a non-null parameter.
+
+let funtiotn will make a safe call.
+
+email?.let { email -> sendEmailTo(email) }
+if email != null then sendEmailTo(email)
+if email == null then do nothing
+
+6.1.8 Late-initialized properties
+Many frameworks initialize objects in dedicated methods called after the object instance has
+been created. But Kotlin requires to initiallize all properties in the constructor if a
+property has a non-null type. 
+
+class Mytest {
+	private lateinit var myService: MyService
+	@Before fun setUp(){
+		myService = MyService()
+	}
+
+	@Test fun testAction(){
+		Assert.assertEquals("foo", myService.performAction()))
+	}
+}
+
+Note that a late-initialized property is always a var.
+
+To ensure compatibility with a broad range of Java frameworks, Kotlin generates a field with
+the same visibility as the lateinit property. If the property is declared as public , the 
+field will be public as well.
+
+6.1.9 Extensions on nullable types
+Extension functions can receive a null type and deal it in the function, but regular function
+can't, since it dispatched through the object instance and therefore can never be preformed
+when the instance is null.
+
+Extensions of nullable types can be accessed without a safe call.
+
+fun String?.isNullOrBlank(): Boolean = this == null || this.isBlank()
+When delcare an extension function for a nullable type(ending with?), that means a nullable
+function can be called, and this in a function body can be null.
+
+let function can receive a nullable type but let doesn't check the value for null.
+So to check the arguments for non-null with let, we have to use the safe-call opertor ?.
+
+by default, an extension is a non-null type. We can safely change it later.
+
+6.1.10 Nullability of type parameters
+All parameters of functions and classes in Kotlin are nullable.
+
+fun <T> printHashCode(t: T){ 
+	println(t?.hashCode())
+}
+>>> printHashCode(null)
+null
+
+To mark the type parameter non-null, we need specify a non-null upper bound. 
+
+fun <T: Any> printHashCode(t: T){
+	println(t.hashCode())
+}
+>>> printHashCode(null)
+Error: Type parameter bound for 'T' is not satisfied
+>>> printHashCode(42)
+42
+
+6.1.11 Nullability and Java
+null`s in the Kotlin world. But Kotlin prides itself on its Java interoperability, and you
+know that Java doesn¡¯t support nullability in its type system. So what happens when you 
+combine Kotlin and Java? Do you lose all safety, or do you have to check every value for `null ?
+
+@Nullable + Type = Type?
+@NotNull + Type = Type
+      Java         Kotlin
+
+Be careful while working with Java APIs. Most of the libraries aren¡¯t annotated, so
+you may interpret all the types as non- null , but that can lead to errors.
