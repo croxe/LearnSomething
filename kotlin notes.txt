@@ -867,6 +867,34 @@ In most cases - for variables, properties, parameter and return types - Kotlin¡¯
 type is compiled to the Java primitive type int . The only case where this is not possible
 is generic classes such as collections. A primitive type used as a type argument of a
 generic class will be compiled to the corresponding Java wrapper type.
+6.1.11 Nullability and Java
+null`s in the Kotlin world. But Kotlin prides itself on its Java interoperability, and you
+know that Java doesn¡¯t support nullability in its type system. So what happens when you 
+combine Kotlin and Java? Do you lose all safety, or do you have to check every value for `null ?
+
+@Nullable + Type = Type?
+@NotNull + Type = Type
+      Java         Kotlin
+
+Be careful while working with Java APIs. Most of the libraries aren¡¯t annotated, so
+you may interpret all the types as non- null , but that can lead to errors.
+
+6.2 Primitive and other basic types
+6.2.1 Primitive types: Int, Boolean, and more
+primitive type: (Int) holds its value directly.
+reference type: (String) holds a reference to the memory location containing the object.
+
+primitive type can  be stored and passed around efficently, but can't call methods on such
+values or store them in collections. Java provides special wrapper types like java.lang.Integer
+that encapsulate primitive types in an object.
+
+In kotlin, primitive and reference types are the same and at runtime, the number types are
+represented in the most efficient way possible.
+
+In most cases - for variables, properties, parameter and return types - Kotlin¡¯s Int
+type is compiled to the Java primitive type int . The only case where this is not possible
+is generic classes such as collections. A primitive type used as a type argument of a
+generic class will be compiled to the corresponding Java wrapper type.
 
 6.2.2 Nullable primitive types: Int?, Boolean?, and more
 Nullable types in Kotlin can¡¯t be represented by Java primitive types, because null can
@@ -886,4 +914,124 @@ Error: type mismatch
 Conversion functions are defined for every primitive type: toByte(), toShort(), toChar()
 The functions support converting in both directions: extending a smaller type to a larger one
 like Int.toLong() and truncating a larger type to a smaller one, like Long.toInt().
+
+The equals method for two boxed values checks the box type, not just the value stored in it.
+
+In java, new Integer(42).equals(new Long(42)) will returns false.
+In kotlin:
+val x=1
+x.toLong() in listOf(1L, 2L, 3L) //return true
+
+Primitive type literals
+Kotlin supports the following ways to write number literals in source code, in
+addition to simple decimal numbers:
+Literals of type Long use the L suffix: 123L .
+Literals of type Double use the standard representation of floating-point
+numbers: 0.12 , 2.0 , 1.2e10 , 1.2e-10 .
+Literals of type Float use the 'f' or F suffix: 123.4f , .456F , 1e3f .
+Hexadecimal literals use the 0x or 0X prefix (such as 0xCAFEBABE or 0xbcdL ).
+Binary literals use the 0b or 0B prefix (such as 0b000000101 ).
+
+when you¡¯re writing a number literal, you usually don¡¯t need to use conversion functions.
+
+6.2.4 Any and Any?: the root types
+any is the supertype of all non-nullable types in Kotlin.
+
+6.2.5 The Unit type: Kotlin¡¯s "void"
+Unit is the void type in Kotlin. 
+fun f(): Unit{} // Unit is usually omitted
+
+Unit is a full-fledged type, and unlike void, it can be used as a type argument.
+
+interface Processor<T>{ 
+	fun process(): T
+}
+class NoResultProcessor : Processor<Unit>{ 
+	override fun process() {
+		// something
+	}	// no return need here
+}
+
+6.2.6 The Nothing type: "This function never returns"
+When analyzing code that calls such a function, it¡¯s useful to know that the function will 
+never terminate normally. To express that, Kotlin uses a special return type called Nothing.
+
+fun fail(message: String): Nothing{
+	throw IllegalStateException(message)
+}
+
+The Nothing type doesn¡¯t have any values, so it only makes sense to use it as a function 
+return type or as a type argument.
+
+6.3 Collections and arrays
+6.3.1 Nullability and collections
+fun readNumbers(reader: BufferedReader): List<Int?> {
+	val result = ArrayList<Int?>()
+	for (line in reader.lineSequence()){ 
+		try {
+			val number = line.toInt()
+			result.add(number)
+		}
+		catch(e: NumberFormatException) {
+			result.add(null)}
+		}
+	}
+	return result
+}
+
+6.3.2 Read-only and mutable collections
+A key thing to keep in mind when working with collection interfaces is that read-only
+collections aren¡¯t necessarily immutable. If you¡¯re working with a variable that has a
+read-only interface type, this can be just one of the many references to the same
+collection. Other references can have a mutable interface type.
+
+6.3.3 Kotlin collections and Java
+Collection Read-only    Mutable
+List 	   listOf() 	arrayListOf()
+Set 	   setOf() 	hashSetOf() , linkedSetOf() , sortedSetOf()
+Map 	   mapOf() 	hashMapOf() , linkedMapOf() , sortedMapOf()
+
+This has important consequences with regard to mutability of collections. Because
+Java doesn¡¯t distinguish between read-only and mutable collections, Java code can
+modify the collection even if it¡¯s declared as a read-only Collection on the Kotlin side.
+The Kotlin compiler can¡¯t fully analyze what¡¯s being done to the collection in the Java
+code, and therefore there¡¯s no way for Kotlin to reject a call passing a read-only
+Collection to Java code that modifies it.
+
+Therefore, if you¡¯re writing a Kotlin function that takes a collection and passes it to
+Java, it¡¯s your responsibility to use the correct type for the parameter.
+
+6.3.4 Collections as platform types
+platform types in Kotlin 
+
+When overriding or implementing a Java method the collection type can be either nullable 
+or non-null Here. You need to decide which Kotlin type you¡¯re going to use to represent a 
+Java type coming from the method you¡¯re overriding or implementing.
+
+think about:
+Is the collection nullable?
+Are the elements in the collection nullable?
+Will your method modify the collection?
+
+6.3.5 Arrays of objects and primitive types
+
+The arrayOf() function creates an array containing the elements specified as arguments
+to this function.
+
+The arrayOfNulls() function creates an array of a given size containing null elements.
+
+The Array() constructor takes the size of the array and a lambda function, and initializes
+each array element by calling the lambda. This is how you can initialize an array with a
+non-null element type without passing each element explicitly.
+
+toIntArray(): convert an array or a collection that holding boxed values of a primitive type
+to an array of that primitive type using the corresponding conversion function.
+
+forEachIndexed(): 
+fun main(args: Array<String>){
+	args.forEachIndexed { index, element
+	->
+	println("Argument $index is: $element")
+	}
+}
 
