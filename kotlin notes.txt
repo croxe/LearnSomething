@@ -850,3 +850,40 @@ combine Kotlin and Java? Do you lose all safety, or do you have to check every v
 
 Be careful while working with Java APIs. Most of the libraries aren¡¯t annotated, so
 you may interpret all the types as non- null , but that can lead to errors.
+
+6.2 Primitive and other basic types
+6.2.1 Primitive types: Int, Boolean, and more
+primitive type: (Int) holds its value directly.
+reference type: (String) holds a reference to the memory location containing the object.
+
+primitive type can  be stored and passed around efficently, but can't call methods on such
+values or store them in collections. Java provides special wrapper types like java.lang.Integer
+that encapsulate primitive types in an object.
+
+In kotlin, primitive and reference types are the same and at runtime, the number types are
+represented in the most efficient way possible.
+
+In most cases - for variables, properties, parameter and return types - Kotlin¡¯s Int
+type is compiled to the Java primitive type int . The only case where this is not possible
+is generic classes such as collections. A primitive type used as a type argument of a
+generic class will be compiled to the corresponding Java wrapper type.
+
+6.2.2 Nullable primitive types: Int?, Boolean?, and more
+Nullable types in Kotlin can¡¯t be represented by Java primitive types, because null can
+only be stored in a variable of a Java reference type. That means whenever you use a
+nullable version of a primitive type in Kotlin, it¡¯s compiled to the corresponding wrapper
+type.
+
+You can¡¯t just compare two values of type Int? , because one of them may be null . Instead, 
+you have to check that both values aren¡¯t null . After that, the compiler allows you to 
+work with them normally.
+
+6.2.3 Number conversions
+val i = 1
+val l: Long = i
+Error: type mismatch
+
+Conversion functions are defined for every primitive type: toByte(), toShort(), toChar()
+The functions support converting in both directions: extending a smaller type to a larger one
+like Int.toLong() and truncating a larger type to a smaller one, like Long.toInt().
+
