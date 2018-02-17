@@ -44,6 +44,43 @@ SS(Model) = n *(Ymean )^2 + (b1)^2 *summation(Xi - Xmean)^2
 SSTotal = (b1) ^2 *summation(Xi - Xmean)^2 + summation(residual e)^2
              RegSS                              SSR
 
-Degree of Freedom is for regression n - parameters, for residual is total - regression.
- 
+Degree of Freedom is the sample size n - parameters. SSR contain the degrees of freedom that
+is not accounted by SS(Model).
+
+Coefficient of determination R^2 is RegSS / SSTotal Range(0,1)
+The interpretation of R^2 is that 79% of the variation in the dependent variable is "explained"
+by its linear relationship.
+
+Residual mean square is an unbiased estimate of sigma square(the variance among the random errors).
+Mean square expectations is regression mean square ( sigma^2 + b1(summation (Xi-Xmean)^2) )
+
+1.5 Precision of Estimates
+variance is the expectation of the squared deviation of a random variable from its mean.
+It measures how far a set of random numbers are spread out from their average value.
+
+Because Ymean, Ypredicted, e , b0, b1 ard random variables computed from the Y observed, so
+measures of precision, variances or standard errors, provide a basis for judging the reliability
+of the estimates.
+
+Covariance measures the tendency of two variables to increase or decrease together.
+When the random variables are independent, covariance sum up to zero.
+
+Variance of sample mean:    Var(Ymean) = sigma^2 / n
+
+Variance of multiple mean:
+
+C = Ymean1 + Ymean2 -2 * Ymean3
+Var(c) =  1^2 *Var(Ymean1) + 1^2 *Var(Ymean2) + (-2)^2 *Var(Ymean3)
+       =  (6) (sigma^2/n)
+
+Variance of b1:
+Var(b1) = (sigma^2 / summation(Xi^2))
+
+Variance of b0:
+Var(b0) = (1/n + Xmean^2 / summation(Xi^2)) * sigma^2
+
+Variance of Y hat at Xi:
+Var(Y hat i) = [1/n + (Xi - Xmean)^2 / summation( Xj ^2)] *sigma^2
+
+
 
