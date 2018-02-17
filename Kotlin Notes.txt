@@ -1,4 +1,4 @@
-Chapter 2
+﻿Chapter 2
 
 fun: the keywords to declare a function.
 
@@ -694,9 +694,70 @@ fun countClicks(window: Window){
 }
 
 
+
 ------------------------------------------ch5-----------------------------------------------
 
+Lambdas are essentially small chuncks of code that can be passed to other functions.
 
+5.1 Lambda expressions and memeber references
+5.5.1 Introduction to lambdas: blocks of code as method parameters
+
+Try treat fnuctions as values.
+Lambda is good subsitute for verbositily anonymous inner clas.s
+button.setOnClickListener{ /* actions */}
+
+5.1.2 Lambdas eand collections
+
+Prinple of Good programming style is to avoid any duplication in code
+
+people.maxBy { it.age }
+// Finds the maximum by comparing the ages.
+people.maxBy(Person::age)
+// replaced by a member reference
+
+5.1.3 Syntax for lambda expressions
+Lambda can store a value independently.
+{x:Int, y:Int -> x + y}
+  parameters      body
+
+can be treat as normal function.
+val sum = { x: Int, y: Int -> x +y }
+
+run { println(42) } // use library function run to executes the lambda
+
+people.maxBy({ p:Person -> p.age})
+//pass it as an argument to the function and it takes one argument of type Person and returns
+its age.
+This code is verbose.
+First, there's too much punctuation, which hurts readability.
+Second, the type can be inferred from the context and therefore omitted.
+Last, you don't need to assign a name to lambda argument in this case.
+
+When you have several arguments, you can emphasize that the lambda is an argument by leaving 
+it inside the parentheses, or you can put it outside.
+
+From here:
+val names = people.joinToString(separator = " ", transform = { p: Person -> p.name })
+To:
+people.joinToString(" ") { p: Person -> p.name }
+
+From here:
+people.maxBy { p: Person -> p.age }
+To:
+people.maxBy { p -> p.age }
+// Argument type inferred
+
+Lambda default argument name: it
+people.maxBy{ it.age }
+Don't abuse it, in nested lambdas it's hard to understand which value the it refers to.
+
+If a lambda is stored in a variable, there's no context from which to infer the argument types,
+so have to specify it:
+
+val getAge = { p:Person -> p.age }
+people.maxBy(getAge)
+
+5.1.4 Accessing variables in scope
 
 
 
