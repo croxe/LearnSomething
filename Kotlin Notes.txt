@@ -640,7 +640,7 @@ Payroll.allEmployees.add(Person(...))
 Payroll.calculateSalary()
 
 4.4.2 Companion objects: a place for factory methods and static members
-Classes in Kotlin can¡¯t have static members. Kotlin relies on package-level functions and 
+Classes in Kotlin canÂ¡Â¯t have static members. Kotlin relies on package-level functions and 
 object declarations.
 
 companion: the ability to access the methods and properties of that object directly through 
@@ -753,7 +753,7 @@ fun Person.countryName() = company?.address?.country ?: "Unknown"
 
 6.1.5 Safe casts: as?
 as? operator tries to cast a value to the specified type and returns null if the
-value doesn¡¯t have the proper type.
+value doesnÂ¡Â¯t have the proper type.
 
 val otherPerson = o as? Person ?: return false
 Checks the type and returns false if no match
@@ -841,14 +841,14 @@ Error: Type parameter bound for 'T' is not satisfied
 
 6.1.11 Nullability and Java
 null`s in the Kotlin world. But Kotlin prides itself on its Java interoperability, and you
-know that Java doesn¡¯t support nullability in its type system. So what happens when you 
+know that Java doesnÂ¡Â¯t support nullability in its type system. So what happens when you 
 combine Kotlin and Java? Do you lose all safety, or do you have to check every value for `null ?
 
 @Nullable + Type = Type?
 @NotNull + Type = Type
       Java         Kotlin
 
-Be careful while working with Java APIs. Most of the libraries aren¡¯t annotated, so
+Be careful while working with Java APIs. Most of the libraries arenÂ¡Â¯t annotated, so
 you may interpret all the types as non- null , but that can lead to errors.
 
 6.2 Primitive and other basic types
@@ -863,20 +863,20 @@ that encapsulate primitive types in an object.
 In kotlin, primitive and reference types are the same and at runtime, the number types are
 represented in the most efficient way possible.
 
-In most cases - for variables, properties, parameter and return types - Kotlin¡¯s Int
+In most cases - for variables, properties, parameter and return types - KotlinÂ¡Â¯s Int
 type is compiled to the Java primitive type int . The only case where this is not possible
 is generic classes such as collections. A primitive type used as a type argument of a
 generic class will be compiled to the corresponding Java wrapper type.
 6.1.11 Nullability and Java
 null`s in the Kotlin world. But Kotlin prides itself on its Java interoperability, and you
-know that Java doesn¡¯t support nullability in its type system. So what happens when you 
+know that Java doesnÂ¡Â¯t support nullability in its type system. So what happens when you 
 combine Kotlin and Java? Do you lose all safety, or do you have to check every value for `null ?
 
 @Nullable + Type = Type?
 @NotNull + Type = Type
       Java         Kotlin
 
-Be careful while working with Java APIs. Most of the libraries aren¡¯t annotated, so
+Be careful while working with Java APIs. Most of the libraries arenÂ¡Â¯t annotated, so
 you may interpret all the types as non- null , but that can lead to errors.
 
 6.2 Primitive and other basic types
@@ -891,19 +891,19 @@ that encapsulate primitive types in an object.
 In kotlin, primitive and reference types are the same and at runtime, the number types are
 represented in the most efficient way possible.
 
-In most cases - for variables, properties, parameter and return types - Kotlin¡¯s Int
+In most cases - for variables, properties, parameter and return types - KotlinÂ¡Â¯s Int
 type is compiled to the Java primitive type int . The only case where this is not possible
 is generic classes such as collections. A primitive type used as a type argument of a
 generic class will be compiled to the corresponding Java wrapper type.
 
 6.2.2 Nullable primitive types: Int?, Boolean?, and more
-Nullable types in Kotlin can¡¯t be represented by Java primitive types, because null can
+Nullable types in Kotlin canÂ¡Â¯t be represented by Java primitive types, because null can
 only be stored in a variable of a Java reference type. That means whenever you use a
-nullable version of a primitive type in Kotlin, it¡¯s compiled to the corresponding wrapper
+nullable version of a primitive type in Kotlin, itÂ¡Â¯s compiled to the corresponding wrapper
 type.
 
-You can¡¯t just compare two values of type Int? , because one of them may be null . Instead, 
-you have to check that both values aren¡¯t null . After that, the compiler allows you to 
+You canÂ¡Â¯t just compare two values of type Int? , because one of them may be null . Instead, 
+you have to check that both values arenÂ¡Â¯t null . After that, the compiler allows you to 
 work with them normally.
 
 6.2.3 Number conversions
@@ -932,12 +932,12 @@ Literals of type Float use the 'f' or F suffix: 123.4f , .456F , 1e3f .
 Hexadecimal literals use the 0x or 0X prefix (such as 0xCAFEBABE or 0xbcdL ).
 Binary literals use the 0b or 0B prefix (such as 0b000000101 ).
 
-when you¡¯re writing a number literal, you usually don¡¯t need to use conversion functions.
+when youÂ¡Â¯re writing a number literal, you usually donÂ¡Â¯t need to use conversion functions.
 
 6.2.4 Any and Any?: the root types
 any is the supertype of all non-nullable types in Kotlin.
 
-6.2.5 The Unit type: Kotlin¡¯s "void"
+6.2.5 The Unit type: KotlinÂ¡Â¯s "void"
 Unit is the void type in Kotlin. 
 fun f(): Unit{} // Unit is usually omitted
 
@@ -953,14 +953,14 @@ class NoResultProcessor : Processor<Unit>{
 }
 
 6.2.6 The Nothing type: "This function never returns"
-When analyzing code that calls such a function, it¡¯s useful to know that the function will 
+When analyzing code that calls such a function, itÂ¡Â¯s useful to know that the function will 
 never terminate normally. To express that, Kotlin uses a special return type called Nothing.
 
 fun fail(message: String): Nothing{
 	throw IllegalStateException(message)
 }
 
-The Nothing type doesn¡¯t have any values, so it only makes sense to use it as a function 
+The Nothing type doesnÂ¡Â¯t have any values, so it only makes sense to use it as a function 
 return type or as a type argument.
 
 6.3 Collections and arrays
@@ -981,7 +981,7 @@ fun readNumbers(reader: BufferedReader): List<Int?> {
 
 6.3.2 Read-only and mutable collections
 A key thing to keep in mind when working with collection interfaces is that read-only
-collections aren¡¯t necessarily immutable. If you¡¯re working with a variable that has a
+collections arenÂ¡Â¯t necessarily immutable. If youÂ¡Â¯re working with a variable that has a
 read-only interface type, this can be just one of the many references to the same
 collection. Other references can have a mutable interface type.
 
@@ -992,21 +992,21 @@ Set 	   setOf() 	hashSetOf() , linkedSetOf() , sortedSetOf()
 Map 	   mapOf() 	hashMapOf() , linkedMapOf() , sortedMapOf()
 
 This has important consequences with regard to mutability of collections. Because
-Java doesn¡¯t distinguish between read-only and mutable collections, Java code can
-modify the collection even if it¡¯s declared as a read-only Collection on the Kotlin side.
-The Kotlin compiler can¡¯t fully analyze what¡¯s being done to the collection in the Java
-code, and therefore there¡¯s no way for Kotlin to reject a call passing a read-only
+Java doesnÂ¡Â¯t distinguish between read-only and mutable collections, Java code can
+modify the collection even if itÂ¡Â¯s declared as a read-only Collection on the Kotlin side.
+The Kotlin compiler canÂ¡Â¯t fully analyze whatÂ¡Â¯s being done to the collection in the Java
+code, and therefore thereÂ¡Â¯s no way for Kotlin to reject a call passing a read-only
 Collection to Java code that modifies it.
 
-Therefore, if you¡¯re writing a Kotlin function that takes a collection and passes it to
-Java, it¡¯s your responsibility to use the correct type for the parameter.
+Therefore, if youÂ¡Â¯re writing a Kotlin function that takes a collection and passes it to
+Java, itÂ¡Â¯s your responsibility to use the correct type for the parameter.
 
 6.3.4 Collections as platform types
 platform types in Kotlin 
 
 When overriding or implementing a Java method the collection type can be either nullable 
-or non-null Here. You need to decide which Kotlin type you¡¯re going to use to represent a 
-Java type coming from the method you¡¯re overriding or implementing.
+or non-null Here. You need to decide which Kotlin type youÂ¡Â¯re going to use to represent a 
+Java type coming from the method youÂ¡Â¯re overriding or implementing.
 
 think about:
 Is the collection nullable?
