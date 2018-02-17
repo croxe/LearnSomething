@@ -1,0 +1,49 @@
+
+
+
+
+
+
+
+CH1: Simple Linear Regression--------------------------------------------------------------
+
+1.1 The Linear Model and Assumptions
+
+The functional relationship between the true mean of Y, denoted by E(Y)
+
+Y = ¦Â0 + ¦Â1*x + e  with e ~iid¡« N(0,¦Ò^2)
+
+N(0,¦Ò^2) is normally distributed.
+
+1.2 Least Squares Estimation
+
+The least square estimation procedure produce the solution must give the smallest possible sum
+of squared deviations of observed Y of the emstimates of their true means.
+
+The least squares chooses b0 and b1 that minimize the sum of squares of the residuals
+
+1.3 Predicted Values and Residuals
+
+e residuals = Y observed - Y predicted
+Which measure the discrepancy between the data and the fitted model.
+
+residuals sum up to zeor due to least square, and there is not other choice to for b0, b1 to
+provide a smaller residual square.
+
+1.4 Analysis of Variationn in thd Dependent Variable
+
+Y observed = Y predicted + e residuals
+The squares of Y observed is called total uncorrected sum of squares
+
+SS(Model) or RegSS is the sum of squares "accounted for" by the model;
+SS(Res) or RSS is the part of sum squares that "unaccounted for".
+
+SS(Model) = n *(Ymean )^2 + (b1)^2 *summation(Xi - Xmean)^2
+          the base line +   slope * the increasement
+
+SSTotal = (b1) ^2 *summation(Xi - Xmean)^2 + summation(residual e)^2
+             RegSS                              SSR
+
+Degree of Freedom is for regression n - parameters, for residual is total - regression.
+ 
+
