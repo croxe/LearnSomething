@@ -759,6 +759,89 @@ people.maxBy(getAge)
 
 5.1.4 Accessing variables in scope
 
+By default, the lifetime of a local variable is constrained by function.
+But lambda can stored and executed the variable later.
+
+When lambda capture a final variable, its value is stored together with the lambda code that use it.
+For non-final variable, the value is enclosed in a spceial wrapper that lets to change, and 
+the reference to the wrapper is stordd together with the lambda.
+
+5.1.5 Member references
+Member references: val getAge = Person::age
+                              class      member
+It provides a short syntax for creating a function value that calls exactly one method or 
+accesses a property. 
+
+people.maxBy(Person::age)
+A member reference has the same type as a lambda that calls that function.
+
+It can be declared at the top level
+fun salute() = println("Salute!")
+>>> run(::salute)
+Salute!
+
+It can take several parameters
+val action = { person: Person, message: String -> sendEmail(person, message) }
+val nextAction = ::sendEmail
+
+It can store the action of creating an instance of a class using a constructor reference.
+data class Person(val name: String, val age: Int)
+>>> val createPerson = ::Person
+>>> val p = createPerson("Alice", 29)
+>>> println(P)
+Person("Alice", 29)
+
+fun Person.isAdult() = age >= 21
+val predicate = Person::isAdult
+
+bound-method references, which allow you to use the method-reference syntax to capture a 
+reference to the method on a specific object instance.
+
+5.2 Functional APIs for collections
+
+5.2.1 Essentials: filter and map
+
+The filter function transforms a collection and filters out elements that don’t satisfy the 
+given predicate.
+
+>>> val list = listOf(1, 2, 3, 4)
+>>> list.filter { it % 2 == 0 }
+[2, 4]
+
+The filter function can remove unwanted elements from a collection, but it doesn’t change 
+the elements.
+The map function will change the each element in the collection to new collection.
+
+>>> val list = listOf(1, 2, 3, 4)
+>>> list.map { it * it }
+[1, 4, 9, 16]
+
+>>> val people = listOf(Person("Alice", 29), Person("Bob", 31))
+>>> people.map { it.name }
+[Alice, Bob]
+
+people.map(Person::name)
+
+Use as a chin calls
+>>> people.filter { it.age > 30 }.map(Person::name)
+[Bob]
+
+Simple-looking code using lambda
+expressions can sometimes obscure the complexity of the underlying operations
+
+It's easy to repeat calculation when multiple lambdas involve.
+
+filterKeys and mapKeys are used for the key of map, 
+filterValues and mapValues are used for the value of map.
+
+5.2.2 all, any, count, and find: applying a predicate to a collection
+
+
+
+
+
+
+
 
 
 ------------------------------------------ch6-----------------------------------------------
