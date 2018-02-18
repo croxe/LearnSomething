@@ -82,5 +82,44 @@ Var(b0) = (1/n + Xmean^2 / summation(Xi^2)) * sigma^2
 Variance of Y hat at Xi:
 Var(Y hat i) = [1/n + (Xi - Xmean)^2 / summation( Xj ^2)] *sigma^2
 
+The variance attains its minimum of sigma^2/n at Xi = Xmean, when Xi is moves away from Xmean.
+This formula estimate the true mean b0 + b1*Xi of Y at hte specific value Xi of X.
 
+Variance of Predictions:
+The success of the prediction will depend on how small the difference is between Y0 hat and the
+future observation Y0. The difference Y0 - Y0 hat is the prediition error.
+The average squared difference between E(Y0 hat - Y0)^2 is the Mean Square Error of Prediction.
+
+Var(Y hat predicted) = [1 + 1/n + (X0 - Xmean)^2/summation(Xi^2)] *sigma^2
+The variance must take account the Y itself is a random variable for predicted.
+
+1.6 Tests of Significance and Confidence Intervals
+The most common hypothesis H0 is interest about that the true value of linear regression coefficient,
+the slope, is zero. That means there is no linear relationship.
+
+Due to the nature of random variability if we test other hypothesized value; we have never get exactly
+equal value even when the hypothesis is true. Therefore, the role of test of significance is to protect
+against being misled by the random variation in the estimates.
+
+Set H0 = 0 , HA != 0
+If the null hypothesis is true, then b1 hat = m is normally distributed with mean zero.
+
+t = (b1 hat - m)/ s(b1 hat)        //Note: s -- standard error
+
+Then look at critical value of t for the apha value. 
+To see whether it can provied evidence b1 is different from zero.
+
+The F-ratio with 1 degree of freedom in the numerator is the square of the corresponding
+t-statistic. Therefore, the F and the t are equivalent tests for this two-tailed
+alternative hypothesis.
+
+Confidence interval estimates
+
+b1 +- t(0.025, degrees of freedom)*s(b1)
+
+b0 +- t(0.025, degrees of freedom)*s(b0)
+
+Small data set limited degrees of freedom available for estimating ¦Ò^2. 
+
+1.7 Regression Through the Origin
 
