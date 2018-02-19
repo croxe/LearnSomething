@@ -1,6 +1,8 @@
+Applied Regression Analysis: A Research Tool, Second Edition
 
-
-
+John O. Rawlings
+Sastry G. Pantula
+David A. Dickey
 
 
 
@@ -123,3 +125,41 @@ Small data set limited degrees of freedom available for estimating ¦Ò^2.
 
 1.7 Regression Through the Origin
 
+In many growth models, the true mean of the dependent variable is expected to be zero when 
+the value of the indpendet variable is zero.
+Which means b0 is forced to be zero.
+
+Yi = b1*Xi + ei
+
+SS(Model)= Summation(Yi hat ^2) with n-1 degrees of freedom
+SS(Res)= Summation(ei ^2) with n-1 degrees of freedom
+
+The residual mean square is an estimate of sigma^2 when the model is correct.
+
+Expectation of the mean in model is E[MS(Model)] = sigma^2 + b1^2 * summation(Xi^2).
+
+The variance of b1:
+Var(b1) = sigma^2/summation(Xj^2)
+
+The divisor on sigma^2 is hte uncorrected sum of squares for independent variable, will always
+be larger than the corrected sum of squares. Therefore, the estimate of b1 with no intercept
+will be much more precise than b1 with intercept. Since b0 is assumed to be known.
+
+Variance of Yi hat
+
+Var(Yi hat) = (Xi^2/Summation(Xj^2))*sigma^2
+
+The largest residual in the residual list is praticularly noticeable, if it is twice bigger
+then the second largest residual, that indicate we maight selected wrong model to fit data.
+
+1.8 Models with Several Independent Variables
+
+Yi = b0 + b1*Xi1 + b2*Xi2 + ... + bn*Xin + ei
+
+The ei are assumeh to be independent and have common variance sigma^2.
+For constructing tests of significance or confidence interval statements, the random errors
+are also assumed to be normally distributed.
+
+SS(Res) = summation(Yi - Yi hat)^2
+
+1.9 Violation of Assumptions
