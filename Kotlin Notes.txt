@@ -1,4 +1,11 @@
-﻿Chapter 2
+﻿Kotlin in Action
+
+Dmitry Jemerov 
+Svetlana Isakova
+
+
+
+Chapter 2-----------------------------------------------------------------------------------
 
 fun: the keywords to declare a function.
 
@@ -835,6 +842,103 @@ filterKeys and mapKeys are used for the key of map,
 filterValues and mapValues are used for the value of map.
 
 5.2.2 all, any, count, and find: applying a predicate to a collection
+
+all and any function: to check wheter all elements in a collection match a certain condition.
+count function checks how many elements satisfy the predicate.
+find function returns the first matching element.
+
+val canBeClub27 = { p: Person -> p.age <= 27 }
+>>> println(people.any(canBeInClub27))
+true
+
+!all can be replaced with any with a negated condition.
+>>> val list = listOf(1, 2, 3)
+>>> println(!list.all { it == 3 })
+true
+>>> println(list.any { it != 3 })
+true
+
+>>> println(people.find(canBeInClub27))
+find returns the first matching element or return null if nothing satisfies the predicate.
+
+5.2.3 groupBy: converting a list to a map of groups
+
+groupBy function: divide all elements into different groups according to some quality.
+Each group is stored in a list, so the result type is Map<Int, List<T>>
+using funciton mapKeys, mapValues for further modifications.
+
+>>> val list = listOf("a", "ab", "b")
+>>> println(list.groupBy(String::first))
+{a=[a, ab], b=[b]}
+
+first isn't a member of String class, it's an extension. We can access it as a member reference.
+
+5.2.4 flatMap and flatten: processing elements in nested collections
+
+The flatMap function does two things: 
+at first it transforms each element to a collection according to the argument function, 
+and then it combines (or flattens) several lists into one.
+
+To convert a collection of collections of elements into one use flatten function.
+ListOfLists.flatten()
+
+5.3 Lazy collection operations: sequences
+The operation in map and filter creates intermediate collections eagerly, meaning the
+intermediate result of each step is stored in a temporary list.
+
+Sequences give an way to perform computations that avoids the creation of intermediate temporary 
+objects.
+
+people.map(Person::name).filter { it.startsWith("A") }
+
+people.asSequence()
+.map(Person::name)
+.filter { it.startsWith("A") }
+.toList()
+
+By default fliter and map return a list, which in the case above, there need to create two lists.
+Use sequences to make this chain calls more efficient, because it provides only iterator method. 
+
+You can convert any collection to a sequence by calling the extension method
+asSequence. You call toList for backward conversion.
+
+5.3.1 Executing sequence operations: intermediate and terminal operations
+
+An intermediate operation returns another sequence, which knows how to transform the elements
+of the original sequence. A terminal operation returns a result, which may be any other
+collection.
+
+sequence.map{...}.filter{...}.toList()
+    intermediate operations   terminal operation
+
+naive approach: Eager evaluation runs each operation on the entire collection.
+sequence approach: lazy evaluation processes elements one by one.
+
+Applying filter first helps to reduce the total number of transformations. 
+
+5.3.2 Creating sequences
+
+generateSequence() function: calculates the next element in a sequence given the previous one.
+
+Postponed computation: The actual numbers in those sequences won’t be evaluated until you 
+call the terminal operation.
+
+>>> val naturalNumbers = generateSequence(0) { it + 1 }
+>>> val numbersTo100 = naturalNumbers.takeWhile { it <= 100 }
+
+
+located in a hidden directory by generating a sequence of its parent directories and
+checking this quality on each of the directories:
+
+fun File.isInsideHiddenDirectory() = generateSequence(this) { it.parentFile }
+							    .any { it.isHidden }
+>>> val file = File("/Users/svtk/.HiddenDir/a.txt")
+
+Note that using sequences allows you to stop traversing the parents as soon as you find
+the required directory.
+
+
+
 
 
 
