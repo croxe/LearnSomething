@@ -938,6 +938,96 @@ Note that using sequences allows you to stop traversing the parents as soon as y
 the required directory.
 
 
+5.4 Using Java functional interfaces
+
+Majority of APIs are written in Java, and Kotlin lambdas are fully interoperable with Java APIs.
+Kotlin allows to use lambdas when calling Java methods that take functional interfaces as
+parameters.
+
+button.setOnClickListener(new OnClickListener() {
+	@Override
+	public void onClick(View v) {
+	...
+	}
+}
+
+button.setOnClickListener { view -> ... }
+
+No anonymous class need in Kotlin.
+
+5.4.1 Passing a lambda as a parameter to a Java method
+
+In Kotlin, an object can be pass through parameter without creating an anonymous object.
+
+When explicitly declare an object, a new instance is created on each invocation. With a 
+lambda, if the lambda doesn’t access any variables from the function where it’s defined, 
+the corresponding anonymous class instance is reused between calls
+
+Creating an anonymous object that implements Runnable explicitly:
+postponeComputation(1000, object : Runnable{	
+	override fun run() {
+		println(42)
+	}
+})
+
+One instance of Runnable is created for the entire program:
+postponeComputation(1000) { println(42) }
+
+Equivalent implementation to an explicit object declaration:
+val runnable = Runnable { println(42) }
+fun handleComputation() {
+	postponeComputation(1000, runnable)
+}
+
+When lambda captures variables from the surrounding scope, it's no longer possible to reuse
+the same instance for every invocation. So compiler creates new object for every call and
+stores the values of the capture variable in that object.
+
+Every lambda expression is compiled into an anonymous class, unless it’s an inline lambda.
+
+Not working with collection using Kotlin extension methods.
+
+inline: no anonymous class will created when pass a lambda to Kotlin function.
+
+5.4.2 SAM constructors: explicit conversion of lambdas to functional interfaces
+
+A SAM constructor is a compiler-generated function that lets you perform an explicit conversion 
+of a lambda into an instance of a functional interface. 
+
+The name of the SAM constructor is the same as the name of the underlying functional interface.
+
+can’t return a lambda directly; need to wrap it into a SAM constructor. 
+
+fun createAllDoneRunnable(): Runnable{ 
+return Runnable { println("All done!") }
+}
+>>> createAllDoneRunnable().run()
+All done!
+
+In addition to returning values, SAM constructors are used when you need to store a functional 
+interface instance generated from a lambda in a variable.
+
+val listener = OnClickListener { view ->
+	val text = when (view.id) {
+		R.id.button1 -> "First button"
+		R.id.button2 -> "Second button"
+		else -> "Unknown button"
+	}
+	toast(text)
+}
+button1.setOnClickListener(listener)
+button2.setOnClickListener(listener)
+
+Note that there’s no this in a lambda as there is in an anonymous object:
+there’s no way to refer to the anonymous class instance into which the lambda is converted.
+this reference in a lambda refers to a surrounding class.
+
+Applying an explicit SAM constructor is a good way to resolve the compilation error that can't
+choose the right overload method.
+
+5.5 Lambdas with receivers: with and apply
+
+5.5.1 The with function
 
 
 
