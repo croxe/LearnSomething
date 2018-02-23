@@ -1027,7 +1027,40 @@ choose the right overload method.
 
 5.5 Lambdas with receivers: with and apply
 
+the ability to call methods of a different object in the body of a lambda without any additional 
+qualifiers. Such lambdas are called lambdas with receivers. 
+
 5.5.1 The with function
+with function, not a statement, perform multiple operations on the same object without repeating
+its name.
+
+Regular function   -> Regular lambda
+Extension function -> Lambda with a receiver
+
+fun alphabet(): String {
+	val stringBuilder = StringBuilder()
+	return with(stringBuilder){ 	
+		for (letter in 'A'..'Z'){
+			this.append(letter)
+		}
+		append("\nNow I know the alphabet!")
+		this.toString()
+	}
+}
+
+5.5.2 The apply function
+
+apply() always returns the object passed to it as a parameter.
+
+fun alphabet() = StringBuilder().apply{ 
+	for (letter in 'A'..'Z') {
+		append(letter)
+	}
+	append("\nNow I know the alphabet!")
+}.toString()
+
+apply is an extension function. The receiver of this function the receiver of the lambda passed
+as an argument.
 
 
 
