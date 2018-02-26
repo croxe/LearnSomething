@@ -1,0 +1,181 @@
+\documentclass[12pt]{article}
+%Reading book:
+%Applied Regression Analysis: A Research Tool, Second Edition
+
+%John O. Rawlings
+%Sastry G. Pantula
+%David A. Dickey
+
+\begin{document}
+\section{Simple Linear Regression}
+\subsection{The Linear Model and Assumptions}
+
+The functional relationship between the true mean of Y, denoted by E($Y|X$)
+
+$$y=\beta_1 x_1+\beta_2 x_2+\epsilon \textrm{  with  } \epsilon \sim_{iid} N(0,\sigma^2)$$
+
+\subsection{Least Squares Estimation}
+
+$$SS(Reg) = \sum^{n}_{i=1} (y - \hat{y}_i)^2 $$
+
+The least square estimation procedure produce the solution must give the smallest possible sum
+of squared deviations of observed Y of the estimates of their true means.
+
+The least squares chooses $b_0$ and $b_1$ that minimize the sum of squares of the residuals
+
+\subsection{Predicted Values and Residuals}
+
+$$e_i \textrm{ residuals} = Y_i \textrm{ observed} - \hat{Y_i} \textrm{ predicted}$$
+Which measure the discrepancy between the data and the fitted model.
+
+residuals sum up to zero due to least square, and there is not other choice to for $b_0$, $b_1$ to
+provide a smaller residual square.
+
+\subsection{Analysis of Variation in the Dependent Variable}
+
+$$ Y_i \textrm{ observed} = \hat{Y_i} \textrm{ predicted} + e_i \textrm{ residuals}$$
+The squares of Y observed is called total uncorrected sum of squares.
+
+SS(Model) or RegSS is the sum of squares "accounted for" by the model;
+SS(Res) or RSS is the part of sum squares that "unaccounted for".
+
+$$SS(Model) = n\bar{Y}^2 + \hat{\beta}^2\sum(X_i-\hat{X}_i)^2$$
+$$SS(Total) = \hat{\beta}^2\sum(X_i-\hat{X}_i)^2 + \sum\epsilon_i^2$$
+
+Degree of Freedom is the sample size $n - predictors$. SSR contain the degrees of freedom that is not accounted by SS(Model).
+
+Coefficient of determination $R^2$ is RegSS / SSTotal in $Range(0,1)$
+The interpretation of $R^2$ is that $79\%$ of the variation in the dependent variable is "explained" by its linear relationship.
+
+Residual mean square is an unbiased estimate of $\sigma^2$(the variance among the random errors).
+The regression mean square is an unbiased estimate of $\sigma^2 +\beta^2(X_i-\bar{X}_i)^2$
+Mean square expectations is regression mean square $\varepsilon[MS(Res)]$ and $\varepsilon[MS(Regr)]$
+
+\subsection{Precision of Estimates}
+
+variance is the expectation of the squared deviation of a random variable from its mean.
+It measures how far a set of random numbers are spread out from their average value.
+
+Because $\bar{Y}$, $\hat{Y}$, $\epsilon$ , $\beta_0$, $\beta_1$ and random variables computed from the $Y_i$, so measures of precision, variances or standard errors, provide a basis for judging the reliability of the estimates.
+
+Covariance measures the tendency of two variables to increase or decrease together.
+When the random variables are independent, covariance sum up to zero.
+
+Variance of sample mean:    $Var(\bar{Y}) = \sigma^2 / n$
+
+Variance of multiple sample mean:
+
+$$C = \bar{Y}_1 + \bar{Y}_2 - 2\bar{Y}_3$$
+$$Var(c) =  1^2 \cdot Var(\bar{Y}_1) + 1^2 \cdot Var(\bar{Y}_2) + (-2)^2 \cdot Var(\bar{Y}_3)
+       =  (6)\cdot (\sigma^2/n)$$
+
+Variance of $\beta_1$:
+$$Var(\beta_1) = \frac{\sigma^2}{\sum(X_i-\bar{X})^2}$$
+
+Variance of $\beta_0$:
+$$Var(\beta_0) = \left[\frac{1}{n} + \frac{\bar{X}^2}{\sum(X_i-\bar{X})^2}\right]\sigma^2$$
+
+Variance of $\hat{Y}_i$ at $X_i$:
+$$Var(\hat{Y}_i) = \left[\frac{1}{n} + \frac{(X_i - \bar{X})^2}{ \sum (X_j - \bar{X})^2}\right]\sigma^2$$
+
+The variance attains its minimum of $\sigma^2/n$ at $X_i = \bar{X}$, when $X_i$ is moves away from $\bar{X}$.
+This formula estimate the true mean $\beta_0 + \beta_1X_i$ of $\hat{Y}$ for specific value $X_i$ of $X$.
+
+\textbf{Variance of Predictions:}
+\\
+The success of the prediction will depend on how small the difference is between $Y_0$ hat and the
+future observation $Y_0$. The difference $Y_0 - \hat{Y}_0$ is the prediction error.
+The average squared difference between $\varepsilon(\hat{Y}_0 - Y_0)^2$ is the Mean Square Error of Prediction.
+
+$$Var(\hat{Y}_{predicted}) = \left[1 + \frac{1}{n} + \frac{(X_0 - \bar{X})^2}{\sum(X_i - \bar{X})^2}\right]\sigma^2$$
+The variance must take account the Y itself is a random variable for predicted.
+
+\subsection{Tests of Significance and Confidence Intervals}
+The most common hypothesis $H_0$ is interest about that the true value of linear regression coefficient,
+the slope, is zero. That means there is no linear relationship.
+
+Due to the nature of random variability if we test other hypothesized value; we have never get exactly
+equal value even when the hypothesis is true. Therefore, the role of test of significance is to protect
+against being misled by the random variation in the estimates.
+
+Set $H_0$ = 0 , $H_a \neq H_0$
+
+If the null hypothesis is true, then $\hat{\beta}_1  = m $is normally distributed with mean zero.
+
+$$t = (\hat{\beta}_1 - m)/ s(\hat{\beta}_1)$$      \\  //Note: s is standard error
+
+Then look at critical value of t for the $\alpha$ value. 
+To see whether it can provide evidence $\beta_1$ is different from zero.
+
+The F-ratio with 1 degree of freedom in the numerator is the square of the corresponding t-statistic. Therefore, the F and the t are equivalent tests for this two-tailed
+alternative hypothesis.
+
+$$F = \frac{MS(Regr)}{MS(Res)}$$
+
+\textbf{Confidence interval estimates:}
+
+$$\hat{\beta_1} \pm t_{0.025, degrees\ of freedom}s\hat{\beta_1}$$
+
+$$\hat{\beta_0} \pm t_{0.025, degrees\ of freedom}s\hat{\beta_0}$$
+
+
+Small data set limited degrees of freedom available for estimating $\sigma^2$.
+
+\subsection{Regression Through the Origin}
+
+
+In many growth models, the true mean of the dependent variable is expected to be zero when 
+the value of the independent variable is zero.
+Which means $b_0$ is forced to be zero.
+
+$$Y_i = \beta_1X_i + \epsilon_i$$
+\\
+$SS(Model)= \sum\hat{Y_i}^2$ with $n-1$ degrees of freedom\\
+$SS(Res)= \sum(Y_i-\hat{Y}_i)^2 = \sum\epsilon^2$ with $n-1$ degrees of freedom\\
+
+The residual mean square is an estimate of $\sigma^2$ when the model is correct.
+
+Expectation of the mean in model is $\varepsilon[(Model)] = \sigma^2 + \beta_1^2\sum(X_i^2).$
+
+\textbf{The variance of $\beta_1$:}
+$$Var(\beta_1) = \frac{\sigma^2}{\sum X_j^2}$$
+
+The divisor on $\sigma^2$ is the uncorrected sum of squares for independent variable, will always be larger than the corrected sum of squares. Therefore, the estimate of $\beta_1$ with no intercept will be much more precise than $\beta_1$ with intercept. Since $\beta_0$ is assumed to be known.
+
+\textbf{Variance of $\hat{Y}_i$:}
+
+$$Var(\hat{Y}_i) = \frac{X_i^2}{\sum X_j^2} \sigma^2$$
+
+The largest residual in the residual list is particularly noticeable, if it is twice bigger
+then the second largest residual, that indicate we might selected wrong model to fit data.
+
+\subsection{Models with Several Independent Variables}
+
+$$Y_i = \beta_0 + \beta_1X_{i1} + \beta_2X_{i2} + ... + \beta_nX_{in} + e_i$$
+
+The $\epsilon_1$ are assumed to be independent and have common variance $\sigma^2$.
+For constructing tests of significance or confidence interval statements, the random errors are also assumed to be normally distributed.
+
+$$SS(Res) = \sum(Y_i - \hat{Y_i})^2$$
+
+\subsection{Violation of Assumptions}
+
+Before we start any inference procedure, we need check normality assumption, independent assumption, zero mean , constant of variance, the possible error of measurement.
+
+\textbf{Normality assumption:}
+Normality is significant on confidence interval, prediction interval. Not very important on estimating variance. we can use
+transformation or other procedure to deal with non-normality.
+
+with large sample size n, statistical inference procedures based on t- and F-statistics are approximately valid, even though the normality assumption is not valid.
+
+\textbf{Correlated Errors:}
+When data are collected in a time sequence, the errors associated with an observation at one point in time will tend to be correlated with the errors of the immediately adjacent observations. When the errors are correlated, the least squares estimators continue to be unbiased, but are no longer the best estimators. Also, in this case, the variance estimators are seriously biased.
+
+\textbf{Non-constant Variance:}
+In some situations, the variability in the errors increases with the independent variable or with the mean of the response variable. The least squares estimators are no longer efficient and the variance formula will no valid.
+
+\textbf{Measurement Errors:}
+When the independent variable is measured with error or when the model Measurement Error is misspecified by omitting important independent variables, least squares estimators will be biased.
+The effect of overly influential outliers also can mislead the outcome.
+
+\end{document}
