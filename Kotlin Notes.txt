@@ -1469,3 +1469,65 @@ with a read-only collection if the variable referencing it is declared as a var 
 
 7.1.3 Overloading unary operators
 
+
+7.1.3 Overloading unary operators
+
+Unary operator:
+operator fun Point.unaryMinus(): Point{ 
+	return Point(-x, -y)
+}
+>>> val p = Point(10, 20)
+>>> println(-p)
+Point(x=-10, y=-20)
+
+Function used to overload unary operators don't take any arguments.
+
+Expression	Function name
++a		unaryPlus
+-a		unaryMinus
+!a		not
+++a,a++		inc
+--a,a--		dec
+
+When define the inc and dec functions to overload increment and decrement
+operators, the compiler automatically supports the same semantics for pre- and post-
+increment operators as for the regular number types.
+
+operator fun BigDecimal.inc() = this + BigDecimal.ONE
+>>> var bd = BigDecimal.ZERO
+>>> println(bd++)  //Increments after the first println statement executes
+0
+>>> println(++bd)  //Increments before the second println statement executes
+2
+
+7.2 Overloading comparison operators
+
+7.2.1 Equality operators: equals
+
+Kotlin supports comparable interface. But the compareTo method defined in that interface can
+be called by commparison operators(<,>,<=,>=).
+a >= b ----> a.compareTo(b) >= 0
+
+class Person(val firstName: String, val lastName: String) : Comparable<Person> {
+	override fun compareTo(other: Person): Int{ 
+		return compareValuesBy(this, other, Person::lastName, Person::firstName)
+	}
+}
+>>> val p1 = Person("Alice", "Smith")
+>>> val p2 = Person("Bob", "Johnson")
+>>> println(p1 < p2)
+false
+
+In this case, you implement the Comparable interface so that the Person objects can be 
+compared not only by Kotlin code but also by Java functions.
+
+compareValueBy: recevies a list of callbacks that calculate values to be compared. The function
+calls each callback in order for both objects and compares the return values.
+Next,
+>>> If different, return result of comparison.
+>>> If same, proceeds to 
+	>>> next callback 
+		or 
+	>>> returns 0 when there are no more left.
+
+7.3 Conventions used for collections and ranges
