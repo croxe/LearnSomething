@@ -1406,3 +1406,66 @@ fun main(args: Array<String>){
 	}
 }
 
+
+
+------------------------------------------ch7-----------------------------------------------
+
+7.1 Overloading arithmetic operators
+
+denfine implement += operator for other class.
+
+7.1.1 Overloading binary arithmetic operations
+
+data class Point(val x: Int, val y: Int){ 
+	operator fun plus(other: Point): Point{
+		return Point(x + other.x, y + other.y)
+	}
+}
+>>> val p1 = Point(10, 20)
+>>> val p2 = Point(30, 40)
+>>> println(p1 + p2)
+Point(x=40, y=60)
+
+All functions used to overload operators need add operator keyword.
+Then when we use "+" operator for class member, it works.
+
+Overloadable binary arithmetic operators:
+a*b	times
+a/b	div
+a%b	mod
+a+b	plus
+a-b	minus
+The operator will stay the same precedence.
+
+There is no need to return the same types for those operands.
+
+operator fun Point.times(scale: Double): Point {
+	return Point((x * scale).toInt(), (y * scale).toInt())
+}
+
+Kotlin operators don't automatically support commutativity.
+So there is a difference for p*1.5 and 1.5*p
+p*1.5 call the function Point.times()
+1.5*p call the function Double.times()
+
+7.1.2 Overloading compound assignment operators
++= plusAssign:
+operator fun <T> MutableCollection<T>.plusAssign(element: T){ 
+	this.add(element)
+}
+
+-= minusAssign
+*= timesAssign
+
+When write += in your code, theoretically both plus the plusAssign functions
+can be called;
+We can  ->  regular function call
+	->  replace the var with a val
+	or  not add both plus and plusAssign at same time
+
+The += and -= operators work on mutable collections by modifying them in place, and on 
+read-only collections by returning a modified copy. (This means += and -= can only be used 
+with a read-only collection if the variable referencing it is declared as a var .)
+
+7.1.3 Overloading unary operators
+
