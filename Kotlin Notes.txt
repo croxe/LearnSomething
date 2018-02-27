@@ -1531,3 +1531,74 @@ Next,
 	>>> returns 0 when there are no more left.
 
 7.3 Conventions used for collections and ranges
+a[b] index operator
+in operator check the element in a collection or in range and also to iterate over a collection.
+
+7.3.1 Accessing elements by index: get and set
+
+In kotlin, reading an element using the index operator is translated into a call of the get
+operator method, and writing an element becomes a call to set.
+
+operator fun Point.get(index: Int): Int{ 
+	return when(index) {
+		0 -> x
+		1 -> y
+		else -> throw IndexOutOfBoundsException("Invalid coordinate $index")
+	}
+}
+>>> val p = Point(10, 20)
+>>> println(p[1])
+20
+
+define a function classname.get and mark it as operator, then class[number] will call get.
+
+7.3.2 The "in" convention
+
+data class Rectangle(val upperLeft: Point, val lowerRight: Point)
+	operator fun Rectangle.contains(p: Point): Boolean {
+		return p.x in upperLeft.x until lowerRight.x &&
+			p.y in upperLeft.y until lowerRight.y
+}
+>>> val rect = Rectangle(Point(10, 20), Point(50, 50))
+>>> println(Point(20, 30) in rect)
+true
+>>> println(Point(5, 5) in rect)
+false
+
+The object on the right side of in becomes the object which the contains method is called.
+
+7.3.3 The rangeTo convention
+
+start..end -> start.rangeTo(end)
+
+(0..9).forEach{print(it)}
+
+7.3.4 The "iterator" convention for the "for" loop
+
+for meaning different in the statement such as for (x in list){...} will be translated into
+a call of list.iterator(), on which hasNext and Next methods are then repeated called.
+
+iterator can be defined as an extension, like
+operator fun CharSequence.iterator(): CharIterator
+>>> for (c in "abc"){}
+//iterate over a string
+
+operator fun ClosedRange<LocalDate>.iterator(): Iterator<LocalDate> =
+	object : Iterator<LocalDate> {
+		var current = start
+	override fun hasNext() =
+		current <= endInclusive
+	override fun next() = current.apply{ 
+		current = plusDays(1)
+	}
+}
+
+7.4 Destructuring declarations and component functions
+
+Destructuring declartions: this feature allows you to unpack a single composite value and
+store it in serveral separate variables.
+
+Val(a, b) = p -> val a = p.comonent1(); val b = p.component2()
+
+7.5 Reusing property accessor logic: delegated properties
+
