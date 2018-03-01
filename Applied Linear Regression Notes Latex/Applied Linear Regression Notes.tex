@@ -5,7 +5,7 @@
 %John O. Rawlings
 %Sastry G. Pantula
 %David A. Dickey
-
+\usepackage{amsmath}
 \begin{document}
 \section{Simple Linear Regression}
 \subsection{The Linear Model and Assumptions}
@@ -177,5 +177,48 @@ In some situations, the variability in the errors increases with the independent
 \textbf{Measurement Errors:}
 When the independent variable is measured with error or when the model Measurement Error is misspecified by omitting important independent variables, least squares estimators will be biased.
 The effect of overly influential outliers also can mislead the outcome.
+
+\section{Multiple Linear regression}
+
+\subsection{The model with matrix notation}
+
+$Y_i = \beta_0 +\beta_1 X_{i1} +\beta_2 X_{i2} + \cdots +\beta_p X_{ip}$
+
+Where sample size denote by $n: 1, 2, \cdots, i$, intercepts denote by $\beta: 0, 1, \cdots, j$. (0 for $\beta_0$ and define 
+$p' = p + 1$)
+
+\[
+\begin{pmatrix}
+Y_1 \\
+Y_2 \\
+Y_3 \\
+\vdots \\
+Y_n
+\end{pmatrix}
+=
+\begin{bmatrix}
+X_{11} & X_{12} & X_{13} & \cdots & X_{1p} \\
+X_{21} & X_{22} & X_{23} & \cdots & X_{2p} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+X_{n1} & X_{n2} & X_{n3} & \cdots & X_{np}
+\end{bmatrix}
+\begin{pmatrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\vdots  \\
+\beta_p
+\end{pmatrix}
++
+\begin{pmatrix}
+\epsilon_1 \\
+\epsilon_2 \\
+\epsilon_3 \\
+\vdots  \\
+\epsilon_n
+\end{pmatrix}
+\]
+
+
 
 \end{document}
