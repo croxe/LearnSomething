@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\begin{document}
+\section{Android Debug Bridge}
+\begin{verbatim}
+Command line through the terminal
+Default Path: "Username"\AppData\Local\Android\Sdk\platform-tools\adb.exe
+
+1. adb devices
+Find all devices currently connected
+
+2. adb logcat
+Print log information in the devices
+adb logcat -c 				Clear buffer log
+adb logcat -b <buffer> 		Print specific log information
+adb logcat -v <format>	 	Print log in format
+adb logcat -f <file> 		Print to specific file path
+
+3. adb install/uninstall
+Install or uninstall apps
+Ex: adb install ~/Downloads/Facebook.apk
+Ex: adb uninstall com.facebook.facebook
+
+4. adb pull/push
+Copy and paste between local and devices
+Ex: adb push ~/temp/GithuApp.trace /sdcard
+Ex: adb pull /sdcard/GithubApp.trace ~/
+
+5. adb start/kill-server
+
+6. adb shell
+start Android shell
+
+7. adb connect/disconnect
+connect/disconnect wifi
+
+8. adb shell am
+"am" is the Android Activity Manager
+ 
+9. adb shell pm
+"pm" is the Android Package Manager
+
+10. adb shell dumpsys
+Output system information
+
+11. adb tcpip
+listen to specific port
+Ex: adb tcpip 5555 "listen to 5555 port"
+
+Emulator Command:
+
+12. emulator -list-avds
+List all devices available
+\end{verbatim}
+\section{Android Manifest}
+
+Android Manifest is a xml, which contains data for user interface. Every android app must have a manifest with same name and located at the root of the package. More importantly 
+it reflect important feature of the app.
+
+\begin{verbatim}
+Under <manifest><application>
+<activity> for each subclass of Activity.
+<service> for each subclass of Service.
+<receiver> for each subclass of BroadcastReceiver.
+<provider> for each subclass of ContentProvider.
+
+Manifest and activity can be named.
+<manifest package = "com.example.myapp" ... > 
+<activity android:name = ".MainActivity" ... >
+
+When App need access to sensitive data, it needs Android Permission.
+<uses-permission android:name="android.permission.SEND_SMS"/>
+
+The <uses-feature> element allows you to declare hardware and software 
+features your app needs.
+<uses-feature android:name="android.hardware.sensor.compass"
+              android:required="true" />
+
+<uses-sdk> allows you to declare the minimum sdk requirement.
+\end{verbatim}
+
+
+
+
+\end{document}
+
+

@@ -219,6 +219,88 @@ X_{n1} & X_{n2} & X_{n3} & \cdots & X_{np}
 \end{pmatrix}
 \]
 
+Maximum Likelihood Estimator:
+
+$$\prod^n_{i=1}[(2\pi)^{1/2} \sigma^{-1} e^{\epsilon^2_i/2\sigma^2}] = (2\pi)^{-n/2} \sigma^{-n} e^{-\sum^n_i \epsilon^2_i\sigma^2}$$
+\begin{center}
+When $\epsilon$ is vector $(\epsilon_1 \ \epsilon_2 \ \epsilon_3  \ \cdots \ \epsilon_n)$
+\end{center}
+
+
+
+test statistics and predict interval are base on normality assumption, but least square estimator is not depend on normality assumption, since it has the minimum variance.
+If normality holds, then the maximum likelihood estimator derived from the formula will produce the maximum probability to generate good sample. Since the $\beta$ on the square will have huge effect.
+
+$$(2\pi)^{-n/2} \sigma^{-n} e^{-\sum^n_i \left[Y_i - \left(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + \cdots + \beta_n X_n \right) \right]^2\sigma^2}$$
+
+\subsection{Normal Equations and Their Solution}
+
+$$X'X\hat{\beta} = X'Y$$
+$$\hat{\beta} = (X'X)^{-1} X'Y$$
+
+\[
+X'X =
+\begin{bmatrix}
+n  &\sum X_{i1}  &\sum X_{i2}  &\cdots   &\sum X_{ip} \\ 
+\sum X_{i1} &\sum X_{i1}^2 &\sum X_{i2} X_{i1}  &\cdots   &\sum X_{ip} X_{i1}  \\ 
+\sum X_{i2} &\sum X_{i1}X_{i2} &\sum X_{i2}^2  &\cdots   &\sum X_{ip} X_{i2} \\ 
+\vdots &\vdots  &\vdots  &\ddots  &\vdots \\ 
+\sum X_{ip} &\sum X_{i1} X_{ip} &\sum  X_{i2} X_{ip} &\cdots  &\sum X_{ip}^2
+\end{bmatrix}
+\]
+
+$$
+X'Y = 
+\begin{pmatrix}
+\sum Y_i \\ 
+\sum X_{i1}Y_i \\
+\sum X_{i2}Y_i \\
+\vdots  \\  
+\sum X_{ip}Y_i
+\end{pmatrix}
+$$
+
+The unique solution exist when the matrix X'X exist, which means X has to be full rank.
+
+
+\subsection{The $\hat{Y}$ and Residual Vector}
+
+$$\hat{Y} = X\hat{X}$$
+$$\hat{Y} = X[(X'X)^{-1}X'Y]$$
+$$let \ P = X(X'X)^{-1}X$$
+$$\hat{Y} = PY $$
+
+The matrix P is a symmetric matrix P'=P, and it's also idempotent PP=P, so it is a project matrix.
+
+Idempotent Note: An idempotent matrix is a square matrix that remains unchanged when Idempotent Matrices multiplied by itself.
+The rank of an Idempotent Matrix is equal to the sum of the
+elements on the diagonal, which defined as \textbf{Trace}, denote by \textbf{tr}(A).
+All of the Idempotent Matrix is symmetric matrix.
+
+Projection Note: Projection of a vector onto a subspace is a special case of a transformation. For example, the P matrix is transform Y in n-dimensional space to the $\hat{Y}$ in a subspace that $\hat{Y}$ is as close as possible. 
+
+In this equation, $\hat{Y}$ and Y is a linear function with coefficient P. 
+
+For example: $\hat{Y}_1 = P_1Y_1 + P_2Y_2 + P_3Y_3 + P_4Y_4$
+
+The residual e reflects the lack of agreement between the observed Y and estimated $\hat{Y}$
+$$\epsilon = Y - \hat{Y}$$
+$$\epsilon = Y - PY$$
+$$\epsilon = (I - P)Y$$
+
+Because least square estimate minimize the sum of square  of residues, $\hat{\beta}$ is choose when the $\epsilon'\epsilon$ is minimum.
+
+$\hat{Y}$ is the part account by the model, $\epsilon$ is the part unable account by the model.
+
+\subsection{Properties of Linear Functions of Random Vectors}
+
+$\hat{\beta},\ \hat{Y}, \epsilon$ are the random vectors output for the function random vector input Y. 
+$$\hat{\beta} = (X'X)^{-1} X'Y$$
+$$\hat{Y} = PY $$
+$$\epsilon = (I - P)Y$$
+
+
+
 
 
 \end{document}
